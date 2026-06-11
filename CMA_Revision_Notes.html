@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<meta name="theme-color" content="#080810"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="CMA Revision"/>
+<link rel="manifest" href="manifest.json"/>
+<title>CMA Foundation — Last Minute Revision</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#080810;color:#DDE0F0;min-height:100vh}
+#hdr{background:linear-gradient(135deg,#0C0C20,#121228);padding:12px 14px 0;position:sticky;top:0;z-index:100;border-bottom:1px solid #1C1C35;box-shadow:0 2px 20px rgba(0,0,0,.5)}
+.hdr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.app-name{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px}
+.app-sub{font-size:10px;color:#4455AA;margin-top:1px}
+.exam-badge{background:#FF3B30;color:#fff;font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;white-space:nowrap}
+.sbar{display:flex;align-items:center;gap:8px;background:#0E0E22;border:1px solid #202040;border-radius:9px;padding:7px 12px;margin-bottom:8px}
+.sbar input{background:none;border:none;color:#DDE0F0;font-size:13px;width:100%;outline:none}
+.sbar input::placeholder{color:#334}
+.ptabs{display:flex;border-bottom:none}
+.ptab{flex:1;padding:8px 2px;text-align:center;font-size:10.5px;font-weight:700;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;color:#3344667;white-space:nowrap;letter-spacing:-.2px;transition:all .2s}
+.ptab.on{border-bottom-color:var(--c);color:var(--c)}
+.pbar-wrap{height:2px;background:#111122}
+.pbar{height:100%;background:var(--pb,#6C63FF);transition:width .4s}
+#stabs-wrap{overflow-x:auto;background:#0A0A1C;border-bottom:1px solid #181835;scrollbar-width:none}
+#stabs-wrap::-webkit-scrollbar{display:none}
+#stabs{display:flex;width:max-content;padding:0 10px}
+.stab{padding:7px 12px;font-size:11px;font-weight:600;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;color:#334466;transition:all .2s}
+.stab.on{border-bottom-color:var(--c);color:var(--c)}
+#wrap{padding:10px 12px 80px;max-width:700px;margin:0 auto}
+.sec-hdr{display:flex;align-items:center;gap:8px;margin-bottom:13px;padding-top:2px}
+.sec-hdr h2{font-size:16px;font-weight:800}
+.cnt{font-size:11px;color:#334;margin-left:auto}
+.card{background:#0C0C1E;border:1px solid #181835;border-left:3px solid var(--c);border-radius:10px;margin-bottom:9px;overflow:hidden}
+.chd{padding:11px 13px;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.ctitle{font-size:13.5px;font-weight:700;color:#DDE0F0;margin-bottom:3px}
+.cprev{font-size:11.5px;color:var(--c);line-height:1.5;opacity:.9}
+.cbadge{font-size:9px;background:rgba(255,255,255,.06);color:var(--c);padding:2px 7px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0}
+.carr{color:#334;font-size:11px;margin-top:2px;flex-shrink:0}
+.cbody{border-top:1px solid #141430;padding:0 13px 12px}
+.nb{border-radius:7px;padding:10px 12px;margin-top:9px;font-size:12.5px;line-height:1.75}
+.nb.key{background:#101225}
+.nb.trick{background:#141408}
+.nb.mem{background:#12082A}
+.nb.warn{background:#180C08}
+.nb.table-box{background:#0E1020}
+.nl{font-weight:800;margin-bottom:5px;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.nl.key{color:#4A9EFF}
+.nl.trick{color:#FFD700}
+.nl.mem{color:#C084FC}
+.nl.warn{color:#FF8040}
+ul.pts{padding-left:16px;margin-top:2px}
+ul.pts li{margin-bottom:5px;font-size:12.5px;line-height:1.65;color:#9AAABB}
+.dtbl{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:6px}
+.dtbl th{background:#141430;padding:6px 9px;text-align:left;font-size:10.5px;font-weight:700}
+.dtbl td{padding:5px 9px;border-top:1px solid #141430;color:#8899AA;vertical-align:top;font-size:11px}
+.dtbl tr:nth-child(even) td{background:#0A0A1A}
+#home{padding:14px 12px 80px;max-width:700px;margin:0 auto}
+.hero{background:linear-gradient(135deg,#0D0D22,#14142E);border:1px solid #1C1C38;border-radius:14px;padding:18px;margin-bottom:14px;text-align:center}
+.hero h2{font-size:21px;font-weight:800;color:#fff;margin-bottom:6px}
+.hero p{font-size:12px;color:#4455AA;line-height:1.7}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pc{background:#0C0C1E;border:1px solid #181835;border-top:3px solid var(--c);border-radius:11px;padding:13px;cursor:pointer;transition:transform .15s}
+.pc:active{transform:scale(.97)}
+.pc-em{font-size:25px;margin-bottom:6px}
+.pc-n{font-size:12.5px;font-weight:800;color:#DDE0F0;margin-bottom:2px}
+.pc-s{font-size:10.5px;color:#334466;line-height:1.45}
+.tips-card{background:#0C0C1E;border:1px solid #181835;border-radius:11px;padding:14px;margin-bottom:12px}
+.tips-lbl{font-size:10px;color:#FFD700;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.tip-r{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px}
+.tip-dot{width:5px;height:5px;border-radius:50%;margin-top:6px;flex-shrink:0}
+.tip-t{font-size:12px;color:#8899AA;line-height:1.65}
+.no-res{text-align:center;color:#334;margin-top:60px;font-size:14px}
+.res-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+#bnav{position:fixed;bottom:0;left:0;right:0;background:#0A0A1C;border-top:1px solid #181835;display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+.nb2{flex:1;padding:9px 3px 7px;display:flex;flex-direction:column;align-items:center;gap:2px;border:none;background:none;cursor:pointer;color:#334;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;transition:color .2s}
+.nb2.on{color:var(--nc)}
+.ni{font-size:18px;line-height:1}
+#ibanner{display:none;position:fixed;bottom:58px;left:12px;right:12px;background:linear-gradient(135deg,#121228,#181838);border:1px solid #252550;border-radius:11px;padding:11px 13px;z-index:200;align-items:center;gap:10px}
+#ibanner.show{display:flex}
+.it{flex:1;font-size:12px;color:#8899AA;line-height:1.5}
+.it strong{color:#DDE0F0;display:block;margin-bottom:1px}
+.ib2{background:#6C63FF;color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+.ix{background:none;border:none;color:#334;font-size:17px;cursor:pointer;padding:2px}
+</style>
+</head>
+<body>
+<div id="hdr">
+  <div class="hdr-row">
+    <div><div class="app-name">📖 CMA Foundation</div><div class="app-sub">Last Minute Revision — All 4 Papers</div></div>
+    <div class="exam-badge">📅 June 14</div>
+  </div>
+  <div class="sbar"><span style="color:#334;font-size:13px">🔍</span><input id="si" type="search" placeholder="Search any topic... (e.g. consideration, elasticity, BRS)"/></div>
+  <div class="ptabs" id="ptabs">
+    <button class="ptab" style="--c:#7777EE" onclick="goHome()" id="t0">🏠</button>
+    <button class="ptab" style="--c:#FF6B6B" onclick="goPaper(1)" id="t1">P1 Laws</button>
+    <button class="ptab" style="--c:#4A9EFF" onclick="goPaper(2)" id="t2">P2 Accounts</button>
+    <button class="ptab" style="--c:#2DAA6E" onclick="goPaper(3)" id="t3">P3 Maths</button>
+    <button class="ptab" style="--c:#F5A623" onclick="goPaper(4)" id="t4">P4 Eco/Mgmt</button>
+  </div>
+  <div class="pbar-wrap"><div class="pbar" id="pbar" style="width:0%"></div></div>
+</div>
+<div id="stabs-wrap" style="display:none"><div id="stabs"></div></div>
+<div id="home"></div>
+<div id="wrap" style="display:none"></div>
+<div id="ibanner"><div class="it"><strong>📲 Install App</strong>Add to Home Screen — works offline</div><button class="ib2" id="ib">Install</button><button class="ix" onclick="document.getElementById('ibanner').classList.remove('show')">✕</button></div>
+<div id="bnav">
+  <button class="nb2 on" style="--nc:#7777EE" id="n0" onclick="goHome()"><span class="ni">🏠</span>Home</button>
+  <button class="nb2" style="--nc:#FF6B6B" id="n1" onclick="goPaper(1)"><span class="ni">⚖️</span>Laws</button>
+  <button class="nb2" style="--nc:#4A9EFF" id="n2" onclick="goPaper(2)"><span class="ni">📒</span>Accts</button>
+  <button class="nb2" style="--nc:#2DAA6E" id="n3" onclick="goPaper(3)"><span class="ni">📐</span>Maths</button>
+  <button class="nb2" style="--nc:#F5A623" id="n4" onclick="goPaper(4)"><span class="ni">💹</span>Eco</button>
+</div>
+<script>
+const D={
+1:{name:"Paper 1 — Business Laws & Communication",color:"#FF6B6B",secs:[
+  {id:"ica",em:"📜",title:"Indian Contract Act, 1872",color:"#FF6B6B",cards:[
+    {t:"Valid Contract — 7 Essentials",p:"Offer+Acceptance | Consideration | Capacity | Free Consent | Lawful Object | Certainty | Not Expressly Void",badge:"40%+ of Paper 1",notes:[
+      {type:"mem",lbl:"Mnemonic — OILCCCN",txt:"Offer & Acceptance → Intention → Lawful Consideration → Capacity → Consent (free) → Certainty → Not void"},
+      {type:"key",lbl:"Core Definitions",pts:["Proposal (Sec 2a): when one person signifies to another willingness to do/abstain from doing anything","Acceptance (Sec 2b): when person to whom proposal is made signifies assent","Promise = Proposal + Acceptance | Agreement = Promise + Consideration","Contract = Agreement enforceable by law (Sec 2h)"]},
+      {type:"trick",lbl:"Communication Rules (Sec 4)",txt:"Offer communication complete when it COMES TO KNOWLEDGE of offeree. Acceptance complete as against proposer when PUT IN COURSE OF TRANSMISSION. As against acceptor when it COMES TO KNOWLEDGE of proposer."},
+      {type:"warn",lbl:"Exam Traps",pts:["Counter-offer = rejection of original offer + fresh offer (original offer lapses)","Offer to the world = general offer (e.g. Carlill v Carbolic Smoke Ball)","Invitation to offer ≠ Offer (price list, menu card, tender notice are invitations)","Silence is NOT acceptance — exception: if agreed upon by parties"]}
+    ]},
+    {t:"Consideration — Rules & Exceptions",p:"'No consideration, no contract' (Sec 25) — but 5 statutory exceptions",badge:"Dec 2025 & Jun 2025",notes:[
+      {type:"key",lbl:"Rules of Valid Consideration",pts:["Must move at desire of promisor (not voluntarily)","Can move from promisee OR any third party (Indian rule — differs from English law)","Past consideration IS valid in India (Sec 25(2))","May be present, future or past","Must have some value in law — adequacy not required but inadequacy = evidence of coercion"]},
+      {type:"mem",lbl:"5 Exceptions to No Consideration (Sec 25)",pts:["1. Love & affection: near relatives, written & registered document","2. Past voluntary service: promise to pay for service already rendered","3. Time-barred debt: written promise to pay, signed by debtor","4. Completed gifts: gift already given needs no consideration","5. Agency: no consideration needed to create agency (Sec 185)"]},
+      {type:"trick",lbl:"Stranger to Contract",txt:"A stranger (third party) CANNOT sue on a contract — only parties to contract can sue. Exception: beneficiary of trust can sue, marriage settlement, charge on property."}
+    ]},
+    {t:"Void vs Voidable vs Illegal — Complete Map",p:"Void = no effect | Voidable = party's choice | Illegal = forbidden by law",badge:"Every attempt",notes:[
+      {type:"key",lbl:"Void Agreements (Sec 2g + Sec 26–30)",pts:["Agreement by minor (Sec 11) — void ab initio","Without consideration (unless under Sec 25 exceptions)","Restraint of marriage (Sec 26) — any person except minor","Restraint of trade (Sec 27) — BUT: sale of goodwill exception allowed","Restraint of legal proceedings (Sec 28)","Wagering agreements (Sec 30) — void but NOT illegal (Maharashtra & Gujarat — illegal)","Agreements to do impossible acts (Sec 56)"]},
+      {type:"key",lbl:"Voidable Contracts (Sec 2i)",pts:["Obtained by coercion, undue influence, fraud or misrepresentation","Aggrieved party can RESCIND (cancel) or AFFIRM","Right to rescind lost if: 3rd party acquired rights, restitution impossible, delay (reasonable time passed)"]},
+      {type:"trick",lbl:"Illegal vs Void",txt:"Illegal = forbidden by law (criminal act). All illegal agreements are void. But NOT all void agreements are illegal. Wagering = void but not illegal. Collateral transactions: void agreements — collaterals valid. Illegal agreements — collaterals also tainted."}
+    ]},
+    {t:"Free Consent — FICUM (Sec 13–22)",p:"Coercion | Undue Influence | Fraud | Misrepresentation | Mistake",badge:"MCQ on each type",notes:[
+      {type:"mem",lbl:"FICUM = Consent is NOT free when...",pts:["F — Fraud (Sec 17): false representation KNOWN to be false OR made recklessly","I — mIsrepresentation (Sec 18): false statement BELIEVED to be true (no fraudulent intent)","C — Coercion (Sec 15): committing/threatening to commit act forbidden by IPC, or unlawful detention","U — Undue Influence (Sec 16): dominant position misused (no criminal act needed)","M — Mistake (Sec 20–22): erroneous belief about material fact"]},
+      {type:"key",lbl:"Effect of Each Vitiating Factor",pts:["Fraud → voidable at option of aggrieved party + damages claimable","Misrepresentation → voidable (no damages unless buyer relied)","Coercion → voidable + burden of proof on coercing party","Undue Influence → voidable + court may set aside even if partially performed","Bilateral mistake of fact on essential matter → VOID (Sec 20)","Unilateral mistake → generally NOT void (Sec 22), unless caused by fraud"]},
+      {type:"trick",lbl:"Coercion vs Undue Influence",txt:"Coercion: uses criminal force/threat. Contract voidable. Undue influence: uses dominant position (employer-employee, doctor-patient, parent-child). Contract voidable. KEY: Undue influence does NOT involve criminal act."}
+    ]},
+    {t:"Discharge of Contract — 6 Modes",p:"Performance | Agreement | Impossibility | Lapse of Time | Operation of Law | Breach",badge:"Theory MCQ",notes:[
+      {type:"mem",lbl:"PAILOB — 6 Modes",pts:["P — Performance: actual or attempted (tender of performance)","A — Agreement: novation (substitution), alteration, remission, rescission","I — Impossibility (Sec 56): subsequent impossibility = void. Initial impossibility = void ab initio","L — Lapse of Time: under Limitation Act","O — Operation of Law: death, insolvency, merger","B — Breach: actual breach (at due date) or anticipatory breach (before due date)"]},
+      {type:"trick",lbl:"Anticipatory Breach",txt:"If party repudiates contract BEFORE performance date — other party can sue IMMEDIATELY (without waiting for due date). Or wait till due date. Classic MCQ: if sued immediately and event making performance impossible occurs, aggrieved party gets nothing."}
+    ]},
+    {t:"Indemnity, Guarantee & Pledge",p:"Indemnity: 2 parties | Guarantee: 3 parties | Pledge: movable goods as security",badge:"Dec 2025 comparison MCQ",notes:[
+      {type:"key",lbl:"Indemnity (Sec 124–125)",pts:["2 parties: Indemnifier (promisor) + Indemnity Holder (promisee)","Indemnifier's liability is PRIMARY — does not wait for loss to occur","Indemnity holder's rights: recover all damages, costs, sums paid in compromising suit"]},
+      {type:"key",lbl:"Contract of Guarantee (Sec 126–147)",pts:["3 parties: Principal Debtor, Creditor, Surety","Surety's liability is SECONDARY — arises only on default of principal debtor","Consideration for surety = same consideration as for principal debtor (no separate needed)","Continuing Guarantee: covers series of transactions | Specific Guarantee: single transaction","Death of surety = revocation of continuing guarantee for future transactions"]},
+      {type:"trick",lbl:"Pledge vs Hypothecation vs Mortgage",txt:"Pledge (Sec 172): movable goods delivered as security (pawnor→pawnee). Hypothecation: movable goods stay with debtor (car loan). Mortgage: immovable property as security."}
+    ]},
+    {t:"Agency — Creation, Authority & Ratification",p:"Agent acts for Principal. No consideration needed. Ratification = retrospective.",badge:"Jun 2025 ratification MCQ",notes:[
+      {type:"key",lbl:"Types of Authority",pts:["Express Authority: given explicitly by words/writing","Implied Authority: inferred from circumstances, conduct, position","Ostensible/Apparent Authority: principal represents agent has authority (even if not given)","Agency by Estoppel: principal cannot deny agency he knowingly allowed","Agency of Necessity: arises in emergency to protect principal's interest"]},
+      {type:"key",lbl:"Ratification Rules (Sec 196–200)",pts:["Principal can ratify unauthorized act of agent","Effect: RETROSPECTIVE — as if authorized from beginning","Conditions: principal must have been in existence, act done on behalf of principal, full knowledge required, cannot ratify partly","Cannot ratify if: act was void/illegal, 3rd party's rights already accrued"]},
+      {type:"trick",lbl:"Termination of Agency",txt:"Terminates by: revocation by principal, renunciation by agent, completion of business, death/insanity/insolvency of EITHER party, subject matter destroyed. IRREVOCABLE: when agent has interest in subject matter (agency coupled with interest)."}
+    ]},
+  ]},
+  {id:"soga",em:"🛍️",title:"Sale of Goods Act, 1930",color:"#FF9090",cards:[
+    {t:"Sale vs Agreement to Sell",p:"Sale = ownership passes NOW | Agreement to Sell = ownership passes LATER/conditionally",badge:"Direct MCQ every attempt",notes:[
+      {type:"key",lbl:"Key Differences",tbl:{cols:["Point","Sale","Agreement to Sell"],rows:[["Ownership","Passes immediately","Passes in future/on condition"],["Risk","With buyer (risk follows title)","With seller till ownership passes"],["Breach remedy","Suit for price","Suit for damages only"],["If goods destroyed","Buyer's loss","Seller's loss"],["Type of goods","Specific existing goods","Future/unascertained goods"]]}},
+      {type:"trick",lbl:"Caveat Emptor (Let Buyer Beware)",txt:"Buyer buys at own risk — seller not liable for defects. EXCEPTIONS: hidden defects seller knows of, buyer discloses purpose → seller's skill relied on, sale by description/sample, buyer cannot examine, fraud by seller."}
+    ]},
+    {t:"Conditions vs Warranties",p:"Condition = essential (breach → repudiate + damages) | Warranty = subsidiary (breach → damages only)",badge:"MCQ distinction",notes:[
+      {type:"key",lbl:"Implied Conditions in Every Sale",pts:["Title: seller has right to sell (Sec 14a)","Description: goods must correspond to description (Sec 15)","Sample: bulk must correspond to sample (Sec 17)","Fitness for purpose: if buyer communicates purpose to seller (Sec 16(1))","Merchantable quality: goods of that description must be merchantable (Sec 16(2))"]},
+      {type:"key",lbl:"Implied Warranties",pts:["Quiet possession: buyer shall have quiet possession (Sec 14b)","Freedom from encumbrances: goods free from any charge (Sec 14c)","Warranty as to quality (by usage of trade)"]},
+      {type:"trick",lbl:"When Condition Treated as Warranty",txt:"Buyer may ELECT to treat breach of condition as warranty (accepts goods despite breach). If buyer accepted goods → can only claim damages, cannot repudiate. Once accepted = cannot return."}
+    ]},
+    {t:"Rights of Unpaid Seller",p:"Lien → Stoppage in Transit → Resale | Against goods (3 rights) + Against buyer (suit)",badge:"Dec 2025 — direct MCQ",notes:[
+      {type:"key",lbl:"3 Rights Against Goods",pts:["1. Lien (Sec 47): right to RETAIN goods until payment. Only while in possession. Lost if: buyer becomes insolvent + seller waives right + goods delivered to carrier","2. Stoppage in Transit (Sec 50): stop goods DURING TRANSIT if buyer becomes insolvent. Transit ends when buyer/agent takes possession.","3. Right of Resale (Sec 54): if buyer defaults, seller can resell. Must give notice (except perishables). Recovers loss from original buyer."]},
+      {type:"trick",lbl:"LSR Memory Trick",txt:"L = before delivery (Lien). S = during transit (Stoppage). R = after attempted delivery (Resale). Rights go in order of the delivery process."}
+    ]},
+  ]},
+  {id:"nia",em:"📄",title:"Negotiable Instruments Act, 1881",color:"#FFAAAA",cards:[
+    {t:"Promissory Note vs Bill of Exchange vs Cheque",p:"PN: maker promises to pay | BOE: drawer orders drawee to pay | Cheque: drawn on bank only",badge:"Dec 2025 — 4-5 MCQs",notes:[
+      {type:"key",lbl:"Comparison Table",tbl:{cols:["Feature","Promissory Note","Bill of Exchange","Cheque"],rows:[["Parties","2 (Maker, Payee)","3 (Drawer, Drawee, Payee)","3 (Drawer, Bank, Payee)"],["Maker","Debtor promises","Creditor orders","Account holder orders"],["Drawn on","Self","Any person","Bank ONLY"],["Acceptance","NOT required","Required (if time bill)","NOT required"],["Payable","On demand or future","On demand or future","Always on demand"],["Days of Grace","3 days","3 days","NONE"],["Noting/Protest","Not required","Required for foreign bills","Not applicable"],["Dishonour","Notice to maker","Notice to drawer & endorsers","Notice + cheque returned"]]}},
+      {type:"warn",lbl:"Common Traps",pts:["Currency notes look like PN but are NOT negotiable instruments (expressly excluded)","Cheque payable to bearer on demand = NOT crossing rule — crossing only restricts encashment mode","'Acceptance' is NOT required for a valid Bill of Exchange to be drawn (only needed before payment of time bill)"]}
+    ]},
+    {t:"Types of Crossing & Dishonour of Cheque",p:"General | Special | Not Negotiable | Account Payee | Restrictive",badge:"Every attempt",notes:[
+      {type:"key",lbl:"Crossings",pts:["General Crossing: two parallel lines (with/without words). Must be collected through SOME bank account.","Special Crossing: name of bank between lines. Collected through THAT specific bank only.","Not Negotiable Crossing: transferee cannot get better title than transferor (but still transferable).","Account Payee/Restrictive: collected into payee's account ONLY. Cannot be endorsed further."]},
+      {type:"key",lbl:"Dishonour of Cheque (Sec 138)",pts:["Cheque returned unpaid due to insufficient funds = criminal offence","Notice: payee must give notice within 30 days of dishonour","Drawer must pay within 15 days of notice","Punishment: imprisonment up to 2 years OR fine up to 2× cheque amount OR both"]}
+    ]},
+  ]},
+  {id:"comm",em:"💬",title:"Business Communication (20 Marks)",color:"#FFCCCC",cards:[
+    {t:"7Cs of Communication & Barriers",p:"Clarity | Completeness | Conciseness | Courtesy | Correctness | Consideration | Concreteness",badge:"2-3 theory MCQs",notes:[
+      {type:"mem",lbl:"7Cs — CLEAR-CC",pts:["Clarity: use simple, clear language — one idea per sentence","Completeness: include all necessary information (who, what, when, where, why)","Conciseness: brief but complete — avoid repetition","Courtesy: respectful, polite tone","Correctness: accurate facts, grammar, spelling","Consideration: focus on receiver's viewpoint (you-attitude)","Concreteness: specific facts and figures, not vague statements"]},
+      {type:"key",lbl:"Barriers to Communication",pts:["Physical: noise, distance, poor infrastructure","Psychological: emotions, perceptions, biases, prejudices","Semantic: language differences, jargon, ambiguity","Organizational: hierarchy, chain of command, information overload","Cultural: different values, beliefs, customs"]},
+      {type:"trick",lbl:"Grapevine (Informal Communication)",txt:"Grapevine = unofficial, informal communication network. Characteristics: fast, unstructured, often inaccurate, travels in clusters. Management cannot eliminate it but can manage it by ensuring timely official communication."}
+    ]},
+    {t:"Types of Business Communication & Letters",p:"Formal vs Informal | Upward/Downward/Lateral | Internal/External",badge:"1-2 MCQs",notes:[
+      {type:"key",lbl:"Channels of Communication",pts:["Downward: superior → subordinate (orders, instructions, policies)","Upward: subordinate → superior (feedback, reports, grievances)","Lateral/Horizontal: same level (coordination between departments)","Diagonal: different levels, different departments","Formal: official channels | Informal: grapevine"]},
+      {type:"key",lbl:"Types of Business Letters",pts:["Circular: one sender → many recipients (same message)","Memo (Memorandum): internal communication, brief, no salutation","Report: formal record of findings/investigation","Agenda: list of items for meeting | Minutes: record of meeting decisions","Enquiry/Quotation → Order → Invoice → Delivery Challan"]}
+    ]},
+  ]},
+]},
+2:{name:"Paper 2 — Financial & Cost Accounting",color:"#4A9EFF",secs:[
+  {id:"b2",em:"📗",title:"Accounting Basics & Framework",color:"#4A9EFF",cards:[
+    {t:"Accounting Concepts & Conventions",p:"Going Concern | Accrual | Consistency | Prudence | Matching | Money Measurement | Cost | Dual Aspect",badge:"Dec 2025 Q — accounting cycle trap",notes:[
+      {type:"key",lbl:"Key Concepts",pts:["Business Entity: business ≠ owner. Owner's transactions separate from business.","Going Concern: business assumed to continue indefinitely (basis for depreciation)","Money Measurement: only monetary transactions recorded","Cost Concept: assets recorded at historical cost, not market value","Accrual: income/expense recognised when earned/incurred, NOT when cash changes hands","Matching: expenses matched to revenue of SAME accounting period","Consistency: same method used year after year","Prudence/Conservatism: anticipate ALL losses, do NOT anticipate profits","Dual Aspect (Sec 2h): every transaction has two effects — debit and credit"]},
+      {type:"warn",lbl:"Exam Trap",txt:"Accounting CYCLE = sequence of steps (not a concept). Dual Aspect IS a concept. Periodicity IS a concept. Don't confuse concepts vs conventions vs principles."}
+    ]},
+    {t:"Golden Rules — 3 Types of Accounts",p:"Real | Personal | Nominal — classify first, then apply rule",badge:"Journal MCQs — every attempt",notes:[
+      {type:"mem",lbl:"Golden Rules",pts:["Real A/c: Debit what COMES IN, Credit what GOES OUT (Cash, Machinery, Stock, Building)","Personal A/c: Debit the RECEIVER, Credit the GIVER (Debtors, Creditors, Bank, Capital)","Nominal A/c: Debit all EXPENSES & LOSSES, Credit all INCOMES & GAINS (Salary, Rent, Commission, Sales)"]},
+      {type:"trick",lbl:"Quick Classification Guide",txt:"Can you touch it? → Real. Is it a person/firm/company? → Personal. Is it an expense/income/gain/loss name? → Nominal. Bank A/c = Personal (bank is a person). Capital A/c = Personal (owner is a person)."},
+      {type:"key",lbl:"Modern Approach (Debit-Credit Rules)",pts:["Assets increase → Dr | Assets decrease → Cr","Liabilities increase → Cr | Liabilities decrease → Dr","Capital increases → Cr | Capital decreases → Dr","Income/Revenue → Cr | Expenses → Dr"]}
+    ]},
+    {t:"Ledger, Trial Balance & Final Accounts Flow",p:"Journal → Ledger → Trial Balance → Final Accounts",badge:"Theory MCQ",notes:[
+      {type:"key",lbl:"Stage by Stage",pts:["Journal: chronological record of every transaction with narration","Ledger: classifies journal entries into T-accounts by account name","Trial Balance: checks arithmetic accuracy (Dr total = Cr total). Does NOT check all errors.","Trading A/c: finds Gross Profit","Profit & Loss A/c: finds Net Profit","Balance Sheet: shows financial position (Assets = Capital + Liabilities)"]},
+      {type:"trick",lbl:"TB Tallies Despite Errors",txt:"TB tallies even with: errors of principle, complete errors of omission, errors of commission (both sides same amount), compensating errors. TB DOES NOT tally with: partial omission, wrong amount on one side only."}
+    ]},
+  ]},
+  {id:"dep2",em:"📉",title:"Depreciation",color:"#FF6B9A",cards:[
+    {t:"SLM vs WDV — Full Comparison",p:"SLM = equal dep every year | WDV = decreasing dep on reducing balance",badge:"Every attempt — numerical + theory",notes:[
+      {type:"key",lbl:"SLM Formulas",pts:["Annual Dep = (Cost − Scrap Value) ÷ Useful Life","Rate % = (Annual Dep ÷ Cost) × 100 = 100 ÷ Life","Book Value after n yrs = Cost − (n × Annual Dep)","Dep remains SAME every year. BV decreases equally."]},
+      {type:"key",lbl:"WDV Formulas",pts:["Annual Dep = Opening Book Value × Rate %","BV = Cost × (1 − r/100)ⁿ after n years","Dep amount DECREASES each year (applied on reducing BV)","BV never mathematically reaches zero","WDV rate from SLM rate: r = [1 − ⁿ√(Scrap/Cost)] × 100"]},
+      {type:"trick",lbl:"SLM→WDV Switch Question",txt:"Step 1: Calculate BV at switching date using SLM (Cost − n×annual dep). Step 2: Apply WDV rate on that BV from switching year. Very common exam question — always first calculate BV at switch point."},
+      {type:"key",lbl:"Causes of Depreciation",pts:["Physical: wear & tear, decay, exhaustion (mines)","Economic: obsolescence (new technology), inadequacy (outgrown)","Time: passage of time (patents, leases)","Depletion: natural resource assets"]}
+    ]},
+  ]},
+  {id:"fa2",em:"📊",title:"Final Accounts — Trading + P&L",color:"#3399FF",cards:[
+    {t:"Trading Account — Complete Structure",p:"COGS = OS + Purchases + Direct Exp − CS | GP = Sales − COGS",badge:"Core — every attempt",notes:[
+      {type:"key",lbl:"Trading Account Layout",pts:["DEBIT SIDE: Opening Stock | Net Purchases (less returns) | Carriage Inwards | Wages/Direct Labour | Factory Expenses | Other Direct Expenses | Gross PROFIT (balancing fig, transferred to P&L)","CREDIT SIDE: Net Sales (less returns) | Closing Stock | Gross LOSS (if any)","COGS = OS + Net Purchases + Direct Expenses − CS","Net Purchases = Gross Purchases − Purchase Returns − Trade Discount"]},
+      {type:"trick",lbl:"Direct vs Indirect — Quick Test",txt:"Direct = physically needed to bring goods into saleable condition (carriage inwards, import duty, wages of factory workers, royalty on production). Indirect = selling/admin/finance (carriage outwards, advertising, office salaries, interest on loan). RULE: Does it happen BEFORE goods are ready? → Direct. AFTER? → Indirect."}
+    ]},
+    {t:"P&L Adjustments — Most Tested Topic",p:"Outstanding | Prepaid | Accrued | Advance | Bad Debts | Provision | Drawings | Depreciation",badge:"40%+ of P2 — highest priority",notes:[
+      {type:"key",lbl:"Adjustment Double Entry",pts:["Outstanding Expense: ADD to expense (P&L Dr) + Current LIABILITY (BS Cr)","Prepaid Expense: DEDUCT from expense + Current ASSET (BS Dr)","Accrued Income: ADD to income + Current ASSET (BS Dr)","Income Received in Advance: DEDUCT from income + Current LIABILITY (BS Cr)","Bad Debts Written Off: P&L Dr | Debtors Cr","Provision for Bad Debts: NEW > OLD → charge DIFFERENCE to P&L | NEW < OLD → credit DIFFERENCE to P&L","Depreciation: P&L Dr | Asset Cr (or Provision for Dep Cr)","Goods Taken by Owner: Reduce Purchases | Dr Drawings A/c"]},
+      {type:"warn",lbl:"Closing Stock — The Guaranteed Trap",pts:["CS given OUTSIDE Trial Balance: Credit in Trading A/c + Asset in BS (shown TWICE)","CS given INSIDE Trial Balance: Show ONLY in BS as Current Asset (already adjusted in Purchases)","This distinction appears in almost every exam — do not confuse!"]}
+    ]},
+    {t:"Balance Sheet — Preparation & Checks",p:"Capital + Liabilities = Assets | WC = CA − CL",badge:"BS balancing MCQ",notes:[
+      {type:"key",lbl:"Closing Capital Calculation",txt:"Closing Capital = Opening Capital + Net Profit − Drawings + Fresh Capital Introduced"},
+      {type:"key",lbl:"Classification of Items",pts:["Fixed Assets: Land, Building, Machinery, Furniture, Patents, Goodwill — shown at Net (Cost−Acc Dep)","Current Assets: Cash, Bank, Debtors (net), Stock, Prepaid, Accrued Income, Short-term investments","Fixed Liabilities: Long-term loans, Debentures, Mortgage","Current Liabilities: Creditors, Outstanding Exp, Income in Advance, Bank OD, Short-term loans"]},
+      {type:"trick",lbl:"Working Capital Formula",txt:"WC = Current Assets − Current Liabilities. Positive = healthy. Negative = danger (can't pay short-term debts). Quick Ratio = (CA − Stock) ÷ CL. Ideal Current Ratio = 2:1, Quick Ratio = 1:1."}
+    ]},
+  ]},
+  {id:"brs2",em:"🏦",title:"Bank Reconciliation Statement",color:"#00BBAA",cards:[
+    {t:"BRS — Complete Method + OD Treatment",p:"Reconcile Cash Book balance with Pass Book balance",badge:"High weightage — every attempt",notes:[
+      {type:"key",lbl:"BRS Formula (Starting from Cash Book — Favourable)",pts:["Start: Cash Book Balance (Dr)","+ Cheques deposited but NOT yet credited by bank","+ Direct credits by bank not yet in CB (interest, ECS, direct deposits)","− Cheques issued but NOT yet presented for payment","− Bank charges/direct debits in PB but not in CB (standing orders, ECS debits)","= Pass Book Balance"]},
+      {type:"key",lbl:"BRS — Overdraft (Starting from CB OD)",pts:["Start: CB Overdraft (Cr balance)","+ Cheques issued but not yet presented (adds to OD)","+ Bank charges not yet in CB","− Cheques deposited but not yet credited (reduces OD)","− Direct credits not yet in CB","= Pass Book Overdraft"]},
+      {type:"trick",lbl:"OD Sign Rule",txt:"OD = liability. All signs FLIP compared to favourable balance method. Unpresented cheques INCREASE OD. Uncredited deposits REDUCE OD. Memorise by logic: uncredited deposits should reduce what you owe."}
+    ]},
+  ]},
+  {id:"err2",em:"🔍",title:"Errors & Rectification",color:"#AA77FF",cards:[
+    {t:"4 Types of Errors — Which Affect Trial Balance?",p:"Only single-sided errors cause TB to not tally",badge:"Theory MCQ Dec 2025",notes:[
+      {type:"key",lbl:"4 Types + TB Effect",pts:["Error of Omission (complete): both sides missing → TB TALLIES (but wrong)","Error of Omission (partial): one side posted → TB DOES NOT TALLY","Error of Commission: wrong amount/wrong account — same amount both sides → TB TALLIES. Different amounts → doesn't tally.","Error of Principle: e.g. capital exp as revenue. Both sides posted = TB TALLIES (principle is wrong, not arithmetic)","Compensating Error: two opposite errors cancel each other → TB TALLIES"]},
+      {type:"trick",lbl:"Suspense Account",txt:"Difference in TB → placed in Suspense A/c temporarily. Dr side > Cr side: Suspense A/c gets Cr balance. Cr side > Dr side: Suspense A/c gets Dr balance. After rectification: Suspense A/c balance = ZERO."}
+    ]},
+  ]},
+  {id:"npo2",em:"🏛️",title:"Non-Profit Organisations",color:"#77AAFF",cards:[
+    {t:"R&P vs I&E vs Balance Sheet",p:"R&P = Cash Book | I&E = P&L | BS = Financial Position",badge:"Dec 2025 — multiple MCQs",notes:[
+      {type:"key",lbl:"Receipts & Payments Account",pts:["ALL cash transactions (capital + revenue)","Does NOT show surplus/deficit","Includes opening and closing cash/bank balances","Like a summarised cash book"]},
+      {type:"key",lbl:"Income & Expenditure Account",pts:["Revenue items ONLY — current year","Shows Surplus (profit) or Deficit (loss)","Adjustments applied: outstanding, prepaid, accrued","Capital items EXCLUDED (donations for building, legacies, endowments)"]},
+      {type:"key",lbl:"Subscription Adjustment Formula",txt:"I&E Credit = Received + Outstanding (current yr) − Advance (received for next yr) [− Last year's advance already credited last year]"},
+      {type:"trick",lbl:"Capital Fund / Legacy / Endowment",txt:"Capital Fund = accumulated surplus (like 'Capital' account). Legacy (gift from deceased's will) = Capital receipt → BS only. Endowment (corpus fund for specific purpose) = Capital receipt → BS only. Both go to BALANCE SHEET, NOT I&E."}
+    ]},
+  ]},
+  {id:"cost2",em:"🏭",title:"Cost Accounting",color:"#1ABC9C",cards:[
+    {t:"Cost Sheet — Layer by Layer Structure",p:"Prime Cost → Works Cost → Cost of Production → COGS → Total Cost",badge:"Core — every attempt",notes:[
+      {type:"key",lbl:"Build Layer by Layer",pts:["Direct Material + Direct Labour + Direct Expenses = PRIME COST","Prime Cost + Factory/Works Overhead = WORKS COST","Works Cost + Opening WIP − Closing WIP = COST OF PRODUCTION","Cost of Production + Opening Finished Goods − Closing Finished Goods = COST OF GOODS SOLD","COGS + Selling & Distribution OH = TOTAL COST / COST OF SALES","Total Cost + Profit = SELLING PRICE"]},
+      {type:"trick",lbl:"Direct vs Indirect — Cost Version",txt:"Direct = traceable to product unit. Examples: Raw material, packing material, factory workers' wages, royalty on production. Indirect = cannot trace to single unit. Examples: Factory manager salary, depreciation on machinery, electricity (unless metered per product)."}
+    ]},
+    {t:"Process Costing — Normal Loss, Abnormal Loss & Gain",p:"Normal Loss = expected | Abnormal Loss = excess | Abnormal Gain = lower than expected",badge:"Dec 2025 numerical Q",notes:[
+      {type:"key",lbl:"Key Formulas",pts:["Normal Output = Input quantity − Normal Loss %","Cost per unit = (Total Input Cost − Scrap value of Normal Loss) ÷ Normal Output","Abnormal Loss = Actual Loss − Normal Loss → valued at COST PER UNIT (debit Abnormal Loss A/c)","Abnormal Gain = Normal Loss − Actual Loss → valued at COST PER UNIT (credit Abnormal Gain A/c)","Normal Loss A/c: Dr Scrap A/c, Cr Process A/c (at scrap value only)"]},
+      {type:"trick",lbl:"P&L Impact",txt:"Normal Loss cost = absorbed into cost per unit of GOOD output (raises CpU). Abnormal Loss = charged to P&L as expense. Abnormal Gain = credited to P&L as income. Net scrap: Abnormal Loss scrap credited, Abnormal Gain scrap debited."}
+    ]},
+    {t:"Overheads — OAR, Under/Over Absorption, Fixed vs Variable",p:"OAR = Budgeted OH ÷ Budgeted Base | Under absorption = actual OH > absorbed",badge:"MCQ every attempt",notes:[
+      {type:"key",lbl:"Overhead Absorption Rate",pts:["OAR = Budgeted Overhead ÷ Budgeted Base (labour hrs / machine hrs / units)","Absorbed OH = OAR × Actual Base used","Under absorption: Actual OH > Absorbed → add to cost (under-recovery, P&L charge)","Over absorption: Actual OH < Absorbed → deduct from cost (over-recovery, P&L credit)"]},
+      {type:"warn",lbl:"Fixed vs Variable — The Classic Trap",pts:["Fixed cost TOTAL: constant regardless of output","Fixed cost PER UNIT: DECREASES as output increases (divides over more units)","Variable cost PER UNIT: CONSTANT always","Variable cost TOTAL: increases proportionally with output","Semi-variable: has both components (e.g. electricity = fixed minimum + per unit charge)"]}
+    ]},
+  ]},
+]},
+3:{name:"Paper 3 — Business Maths & Statistics",color:"#2DAA6E",secs:[
+  {id:"ratio3",em:"⚖️",title:"Ratio, Proportion & Partnership",color:"#2DAA6E",cards:[
+    {t:"Ratio & Proportion — All Types",p:"Mean Prop = √(ab) | Third = b²/a | Fourth = bc/a | Continued: b²=ac",badge:"Dec 2025 Q1",notes:[
+      {type:"key",lbl:"All Proportional Types",pts:["Mean Proportional between a & b = √(ab) [b is mean between a & b means a:b = b:x → x=b²/a]","Third Proportional: a:b = b:x → x = b²/a","Fourth Proportional: a:b = c:x → x = bc/a","Continued Proportion: a:b = b:c → b² = ac → b = √(ac)"]},
+      {type:"trick",lbl:"Componendo-Dividendo",txt:"If a/b = c/d, then (a+b)/(a−b) = (c+d)/(c−d). Useful for solving equations with fractions."},
+      {type:"key",lbl:"Partnership Division",pts:["Profit sharing ∝ Capital × Time","If equal time: split in ratio of capitals","If unequal time: Capital × months for each partner"]}
+    ]},
+  ]},
+  {id:"si3",em:"💰",title:"Simple & Compound Interest",color:"#44BB77",cards:[
+    {t:"Simple Interest — All Shortcuts",p:"SI = PRT/100 | Doubling: R=100/T | nTimes: R=(n−1)×100/T",badge:"Dec 2025 Q5",notes:[
+      {type:"key",lbl:"All SI Formulas",pts:["SI = (P × R × T) / 100","A = P + SI = P(1 + RT/100)","If sum doubles: R = 100/T","If sum triples: R = 200/T","If sum becomes n times: R = (n−1)×100/T","Time to double at given rate: T = 100/R"]},
+      {type:"trick",lbl:"Rule of 72",txt:"Time to double at R% = 72/R (approximate). At 8% → doubles in ~9 years. Useful for quick estimation."}
+    ]},
+    {t:"Compound Interest — Key Shortcuts",p:"A=P(1+r/100)ⁿ | 2yr trick: CI = SI + r% on 1yr SI | CI−SI = P(r/100)²",badge:"Highly repeated",notes:[
+      {type:"key",lbl:"All CI Formulas",pts:["A = P(1 + r/100)ⁿ | CI = A − P","2-year shortcut: CI = SI for 2 years + (SI of year 1 × r/100)","CI − SI for 2 years = P × (r/100)²","Half-yearly: use r/2 and 2n | Quarterly: use r/4 and 4n","Present Value = A ÷ (1+r/100)ⁿ"]},
+      {type:"trick",lbl:"Effective Annual Rate",txt:"EAR for half-yearly = (1 + r/200)² − 1. Always > nominal rate. Half-yearly compounding is better than annual for same nominal rate."}
+    ]},
+  ]},
+  {id:"ap3",em:"📐",title:"AP, GP & Special Series",color:"#55CC88",cards:[
+    {t:"Arithmetic Progression (AP) — All Formulas",p:"Tn = a+(n−1)d | Sn = n/2(2a+(n−1)d) | Sum of natural numbers = n(n+1)/2",badge:"Dec 2025 Q2, Q4",notes:[
+      {type:"key",lbl:"Complete AP Formulae",pts:["nth term: Tn = a + (n−1)d","Sum of n terms: Sn = n/2 × [2a + (n−1)d] OR n/2 × (first + last)","AM between a & b = (a+b)/2","Sum of first n natural numbers = n(n+1)/2","Sum of first n even numbers = n(n+1)","Sum of first n odd numbers = n²","Sum of squares of first n natural numbers = n(n+1)(2n+1)/6","Sum of cubes = [n(n+1)/2]²"]},
+      {type:"trick",lbl:"3 Terms in AP",txt:"When 3 terms are in AP, take them as (a−d), a, (a+d). Their sum = 3a. Makes calculation much easier."}
+    ]},
+    {t:"Geometric Progression (GP) — All Formulas",p:"Tn = arⁿ⁻¹ | Sum = a(rⁿ−1)/(r−1) | Infinite GP: S = a/(1−r)",badge:"Dec 2025 Q3",notes:[
+      {type:"key",lbl:"Complete GP Formulae",pts:["nth term: Tn = a × r^(n−1)","Sum of n terms (r>1): Sn = a(rⁿ−1)/(r−1)","Sum of n terms (r<1): Sn = a(1−rⁿ)/(1−r)","Infinite GP (|r|<1): S∞ = a/(1−r)","GM between a & b = √(ab)","GM of n numbers = (x₁×x₂×...×xₙ)^(1/n)"]},
+      {type:"trick",lbl:"3 Terms in GP",txt:"Take them as a/r, a, ar. Their PRODUCT = a³. Their RATIO of last to first = r². Saves huge calculation time."}
+    ]},
+  ]},
+  {id:"log3",em:"🔢",title:"Logarithms & Indices",color:"#66BB44",cards:[
+    {t:"All Log Rules in One Place",p:"log(mn)=log m+log n | log(m/n)=log m−log n | log mⁿ=n·log m",badge:"Dec 2025 Q6,7,8",notes:[
+      {type:"key",lbl:"Complete Log Rules",pts:["Product: log(mn) = log m + log n","Quotient: log(m/n) = log m − log n","Power: log(mⁿ) = n × log m","log₁₀10 = 1 | logₐa = 1 | log 1 = 0 (any base)","Change of base: logₐb = log b / log a = 1/logᵦa","Characteristic = integer part | Mantissa = decimal part","log(0.1) = −1 | log(0.01) = −2 | log(100) = 2"]},
+      {type:"trick",lbl:"Prime Factorization Trick",txt:"To find log of any number: factorize into primes first, then use rules. log 72 = log(2³×3²) = 3log2 + 2log3. If given log2=0.3010, log3=0.4771 → log72 = 3(0.3010)+2(0.4771) = 0.903+0.9542 = 1.8572."}
+    ]},
+    {t:"Indices — Laws & Shortcuts",p:"aᵐ×aⁿ = aᵐ⁺ⁿ | (aᵐ)ⁿ = aᵐⁿ | a⁰=1 | a⁻ⁿ=1/aⁿ",badge:"Dec 2025 Q6,7",notes:[
+      {type:"key",lbl:"All Index Laws",pts:["aᵐ × aⁿ = aᵐ⁺ⁿ | aᵐ ÷ aⁿ = aᵐ⁻ⁿ","(aᵐ)ⁿ = aᵐⁿ | (ab)ⁿ = aⁿbⁿ","a⁰ = 1 (any base except 0) | a¹ = a","a⁻ⁿ = 1/aⁿ | a^(1/n) = ⁿ√a","a^(m/n) = (ⁿ√a)ᵐ"]},
+      {type:"trick",lbl:"Index Ratio Question",txt:"If (100)ˣ = (1000)ʸ = 10ᶻ: express all in base 10. 10^(2x) = 10^(3y) = 10^z = k. So 2x=3y=z. Assume =6: x=3, y=2, z=6. Ratio x:y:z = 3:2:6."}
+    ]},
+  ]},
+  {id:"perm3",em:"🔀",title:"Permutation & Combination",color:"#44CC88",cards:[
+    {t:"P&C — Complete Formulas & Tricks",p:"nPr = n!/(n−r)! | nCr = n!/r!(n−r)! | nCr = nCn−r",badge:"Dec 2025 Q9–Q13",notes:[
+      {type:"key",lbl:"Key Formulas",pts:["nPr = n × (n−1) × ... × (n−r+1) — just write r terms from n going down","nCr = nPr ÷ r! = n!/[r!(n−r)!]","nC0 = nCn = 1 | nC1 = n | nCr = nCn−r","Total subsets of n elements = 2ⁿ | Proper subsets = 2ⁿ − 1","Circular arrangement = (n−1)! | Circular with two sides = (n−1)!/2","Word arrangements: divide by repeated letter factorials"]},
+      {type:"trick",lbl:"Fixed / Excluded Member Tricks",pts:["k members MUST be included: fix them, choose (r−k) from (n−k) remaining","k members must be EXCLUDED: choose r from (n−k) only","Always together: treat as one block. Count arrangements of block × internal arrangements of block.","Never together: (All arrangements) − (Always together arrangements)"]},
+      {type:"mem",lbl:"Factorial Values",pts:["0!=1, 1!=1, 2!=2, 3!=6, 4!=24, 5!=120, 6!=720, 7!=5040","nPn = n! | nP0 = 1 | nC0 = 1 | nCn = 1"]}
+    ]},
+  ]},
+  {id:"calc3",em:"📈",title:"Calculus — Differentiation & Integration",color:"#33BB66",cards:[
+    {t:"Differentiation — Rules & Applications",p:"d/dx(xⁿ)=nxⁿ⁻¹ | d/dx(eˣ)=eˣ | d/dx(ln x)=1/x | Maxima: d²y/dx²<0",badge:"Dec 2025 Q12",notes:[
+      {type:"key",lbl:"All Differentiation Rules",pts:["Power: d/dx(xⁿ) = nxⁿ⁻¹","Constant: d/dx(c) = 0 | d/dx(cx) = c","Sum/Diff: d/dx(u±v) = u' ± v'","Product: d/dx(uv) = uv' + vu'","Quotient: d/dx(u/v) = (vu'−uv')/v²","Chain: d/dx[f(g(x))] = f'(g(x)) × g'(x)","Exponential: d/dx(eˣ) = eˣ | d/dx(aˣ) = aˣ·ln a","Log: d/dx(ln x) = 1/x | d/dx(log₁₀x) = 1/(x·ln10)"]},
+      {type:"trick",lbl:"Maxima/Minima Steps",txt:"1. dy/dx = 0 → solve for x (critical points). 2. d²y/dx²: if negative → MAXIMUM, if positive → MINIMUM. For MC/MR: set MC=MR to find profit-maximising output."}
+    ]},
+    {t:"Integration — Basic Rules",p:"∫xⁿdx = xⁿ⁺¹/(n+1)+C | ∫eˣdx = eˣ+C | ∫(1/x)dx = ln|x|+C",badge:"Occasional Q",notes:[
+      {type:"key",lbl:"Basic Integration Formulas",pts:["∫xⁿ dx = xⁿ⁺¹/(n+1) + C (n≠−1)","∫eˣ dx = eˣ + C | ∫aˣ dx = aˣ/ln a + C","∫(1/x) dx = ln|x| + C","∫k dx = kx + C","Definite integral: ∫ₐᵇ f(x)dx = [F(x)]ₐᵇ = F(b) − F(a)"]}
+    ]},
+  ]},
+  {id:"stat3",em:"📊",title:"Statistics — Complete Coverage",color:"#22AA77",cards:[
+    {t:"Measures of Central Tendency — All",p:"AM = Σfx/Σf | GM = Antilog(Σf·logx/Σf) | HM = n/Σ(1/x)",badge:"Multiple Qs every attempt",notes:[
+      {type:"key",lbl:"All Formulas",pts:["Arithmetic Mean (ungrouped) = Σx/n | (grouped) = Σfx/Σf","Median (ungrouped, odd n) = middle value | (even n) = avg of 2 middle values","Median (grouped) = l + [(n/2−cf)/f] × h","Mode (grouped) = l + [(f₁−f₀)/(2f₁−f₀−f₂)] × h","Geometric Mean = Antilog[Σf·log x / Σf]","Harmonic Mean = n / Σ(1/x) — used for averaging RATES & SPEEDS"]},
+      {type:"trick",lbl:"AM ≥ GM ≥ HM Rule",txt:"For any set of positive numbers: AM ≥ GM ≥ HM always. Equality only when all values are equal. Exam: 'which is largest?' = AM. 'Which is smallest?' = HM."}
+    ]},
+    {t:"Measures of Dispersion — SD, Variance & CV",p:"SD = √(Σf(x−x̄)²/n) | Var = SD² | CV = SD/Mean × 100",badge:"High weightage",notes:[
+      {type:"key",lbl:"All Dispersion Formulas",pts:["Range = Maximum − Minimum (simplest, but affected by extremes)","Mean Deviation = Σf|x−Mean|/Σf","Variance = Σf(x−x̄)²/Σf (population) | Σf(x−x̄)²/(Σf−1) (sample)","Standard Deviation = √Variance","Coefficient of Variation (CV) = (SD/Mean) × 100","Quartile Deviation = (Q3−Q1)/2"]},
+      {type:"trick",lbl:"Assumed Mean (Step Deviation) Method for SD",txt:"Set A = midpoint of middle class. d = (x−A)/h where h = class width. SD = h × √[Σfd²/n − (Σfd/n)²]. This converts large numbers to small ones like 0, ±1, ±2 — much faster calculation!"},
+      {type:"key",lbl:"CV Interpretation",pts:["Lower CV = more consistent/uniform/stable","Higher CV = more variable/dispersed","Compare TWO datasets: choose lower CV as more consistent","CV is dimensionless — useful for comparing different units"]}
+    ]},
+    {t:"Probability — All Rules & Shortcuts",p:"P(E)=m/n | Complement: P(A')=1−P(A) | Independent: P(A∩B)=P(A)×P(B)",badge:"Every attempt",notes:[
+      {type:"key",lbl:"Complete Probability Rules",pts:["Classical: P(E) = Favourable / Total equally likely outcomes","Complement: P(A') = 1 − P(A)","Addition: P(A∪B) = P(A) + P(B) − P(A∩B)","Mutually Exclusive: P(A∪B) = P(A) + P(B) [since P(A∩B)=0]","Independent Events: P(A∩B) = P(A) × P(B)","Conditional: P(A|B) = P(A∩B)/P(B)","'At least one': P(at least 1) = 1 − P(none)"]},
+      {type:"trick",lbl:"Pie Chart Angle",txt:"Angle for any component = (Component Value ÷ Total) × 360°. Example: component = 240, total = 720 → angle = (240/720)×360 = 120°."},
+      {type:"key",lbl:"Cards, Coins & Dice — Quick Reference",pts:["Deck: 52 cards, 4 suits (13 each), 12 face cards (J,Q,K), 4 aces, 26 red, 26 black","Coin: 1 toss=2 outcomes, 2 tosses=4, n tosses=2ⁿ outcomes","Die: 6 faces. Two dice = 36 outcomes. Same number on both = 6 ways."]}
+    ]},
+    {t:"Index Numbers & Correlation",p:"Price Relative = (P₁/P₀)×100 | Laspeyres / Paasche / Fisher",badge:"Occasional Q",notes:[
+      {type:"key",lbl:"Index Number Formulas",pts:["Price Relative = (Current Price / Base Price) × 100","Simple Mean of Relatives = ΣP/N","Laspeyres Index = Σ(P₁Q₀)/Σ(P₀Q₀) × 100 [base year quantities]","Paasche Index = Σ(P₁Q₁)/Σ(P₀Q₁) × 100 [current year quantities]","Fisher's Ideal = √(Laspeyres × Paasche) — called 'ideal' as it's geometric mean of both"]},
+      {type:"trick",lbl:"Correlation Coefficient (r)",txt:"r = +1: perfect positive. r = −1: perfect negative. r = 0: no correlation. |r| > 0.75 = strong. 0.5–0.75 = moderate. < 0.5 = weak. r is always between −1 and +1."}
+    ]},
+  ]},
+]},
+4:{name:"Paper 4 — Business Economics & Management",color:"#F5A623",secs:[
+  {id:"micro4",em:"📉",title:"Microeconomics",color:"#F5A623",cards:[
+    {t:"Demand — Law, Determinants & Exceptions",p:"Law: Price↑ → Demand↓ | Exceptions: Giffen, Veblen, Expectations",badge:"8–10 MCQs every attempt",notes:[
+      {type:"key",lbl:"Law of Demand",pts:["Demand and price are INVERSELY related (ceteris paribus — other things equal)","Demand curve slopes DOWNWARD left to right","Reasons: substitution effect, income effect, new buyers at lower price","Determinants: price of good, income, prices of related goods, tastes, expectations, number of buyers"]},
+      {type:"key",lbl:"Types of Demand Curves",pts:["Perfectly elastic: horizontal line (PED = ∞) — luxury goods, goods with many substitutes","Perfectly inelastic: vertical line (PED = 0) — life-saving drugs, salt","Unitary elastic: rectangular hyperbola (PED = 1) — comfort goods","Elastic (PED>1): flatter curve | Inelastic (PED<1): steeper curve"]},
+      {type:"warn",lbl:"Exceptions to Law of Demand",pts:["Giffen goods: inferior goods with no substitute (demand↑ as price↑ — e.g. coarse grains during famine)","Veblen/Prestige goods: luxury goods used as status symbols (diamond, luxury cars)","Expectations: if price expected to rise further, people buy more now despite current rise","Necessities of life: inelastic, not an exception per se but appears similar"]}
+    ]},
+    {t:"Elasticity of Demand — All Types",p:"PED | YED | XED | Advertising Elasticity",badge:"Dec 2025 & every attempt",notes:[
+      {type:"key",lbl:"Price Elasticity (PED)",pts:["PED = % change in Qd / % change in Price","Factors: availability of substitutes (main factor), necessity vs luxury, proportion of income spent, time period","Elastic (>1): luxuries, goods with many substitutes","Inelastic (<1): necessities, goods with few substitutes, addictive goods"]},
+      {type:"key",lbl:"Income Elasticity (YED)",pts:["YED = % change in Qd / % change in Income","YED > 1: Luxury good (demand rises faster than income)","0 < YED < 1: Necessity (demand rises but slowly)","YED < 0: Inferior good (demand falls as income rises — e.g. coarse grains, public bus)","YED = 0: Neutral good (income change has no effect)"]},
+      {type:"key",lbl:"Cross Elasticity (XED)",pts:["XED = % change in Qd of A / % change in Price of B","XED > 0: SUBSTITUTES (Coke & Pepsi, butter & margarine)","XED < 0: COMPLEMENTS (car & petrol, tea & sugar)","XED = 0: Independent goods (no relationship)"]},
+      {type:"trick",lbl:"Ratchet Effect & Lifecycle Hypothesis",txt:"Duesenberry Ratchet Effect: consumption doesn't fall easily when income falls (people maintain habits). Modigliani LCH: people borrow when young, save in middle age, dissave in old age — consumption smooth over lifetime. Friedman PIH: consumption depends on permanent income, not current income."}
+    ]},
+    {t:"Supply — Law, Elasticity & Market Equilibrium",p:"Law: Price↑ → Supply↑ | Equilibrium: Qd = Qs",badge:"MCQ",notes:[
+      {type:"key",lbl:"Law of Supply",pts:["Price and supply are DIRECTLY related (ceteris paribus)","Supply curve slopes UPWARD left to right","Determinants: input costs, technology, number of firms, government taxes/subsidies, prices of other goods in production, expectations"]},
+      {type:"key",lbl:"Market Equilibrium",pts:["Equilibrium: Demand = Supply → market clears","Price above equilibrium → surplus → price falls","Price below equilibrium → shortage → price rises","Shift in demand/supply → new equilibrium"]},
+      {type:"trick",lbl:"Consumer & Producer Surplus",txt:"Consumer surplus = what buyer WILLING to pay − what they ACTUALLY pay. Producer surplus = price received − minimum price willing to accept. Both increase in competitive markets."}
+    ]},
+    {t:"Theory of Production & Cost Curves",p:"TP, MP, AP | Variable Proportions | Returns to Scale | Cost Curves",badge:"Conceptual MCQ",notes:[
+      {type:"key",lbl:"Laws of Production",pts:["Law of Variable Proportions (Short Run): Initially increasing returns, then diminishing, then negative returns to variable factor","When MP > AP: AP rises | When MP < AP: AP falls | MP = AP at AP's MAXIMUM (MP curve cuts AP at its max)","Law of Returns to Scale (Long Run): all inputs changed proportionally — IRS, CRS, DRS"]},
+      {type:"key",lbl:"Cost Curves Relationships",pts:["TC = TFC + TVC | AC = AFC + AVC | MC = ΔTC/ΔQ","AFC hyperbola (decreasing always) | AVC is U-shaped","AC is U-shaped, lies ABOVE AVC (AFC gap between them)","MC cuts both AVC and AC at their MINIMUM points","MC initially falls, then rises — U-shaped","In long run: all costs variable, LAC is envelope curve (flatter U)"]},
+      {type:"trick",lbl:"Shutdown vs Break-Even",txt:"Shutdown point: Price < AVC (can't even cover variable costs — shut down immediately). Break-even point: Price = AC (covers all costs, normal profit). If P > AC: supernormal profit. AVC < P < AC: operate in short run, loss but covers some fixed costs."}
+    ]},
+    {t:"Market Structures — Complete Comparison",p:"Perfect Competition | Monopoly | Monopolistic | Oligopoly",badge:"Theory MCQ every attempt",notes:[
+      {type:"key",lbl:"Comparison Table",tbl:{cols:["Feature","Perf. Comp.","Monopoly","Monopolistic","Oligopoly"],rows:[["Sellers","Very many","One","Many","Few (2-10)"],["Product","Homogeneous","Unique, no sub.","Differentiated","Homog/Diff"],["Price control","None (taker)","Full (maker)","Some","Interdependent"],["Entry/Exit","Free","Blocked","Easy","Difficult"],["AR vs MR","AR=MR=P","AR>MR","AR>MR","Kinked demand"],["Long run profit","Normal only","Supernormal","Normal","Supernormal"],["Example","Wheat/rice","Railways/Elec","Soaps/FMCG","Cars/Cement"]]}},
+      {type:"trick",lbl:"AR = MR Rule",txt:"Perfect competition: AR = MR = Price (demand curve is horizontal = firm is price taker). Monopoly/Monopolistic: AR > MR (demand curve downward sloping — to sell more, price must fall, reducing MR faster than AR)."}
+    ]},
+  ]},
+  {id:"macro4",em:"📈",title:"Macroeconomics",color:"#FF9933",cards:[
+    {t:"National Income — All Concepts",p:"GDP→GNP→NNP→NI→PI→DPI | 3 Methods",badge:"High weightage — every attempt",notes:[
+      {type:"key",lbl:"National Income Aggregates (Step Down)",pts:["GDP (at Market Price): total value of all final goods/services produced WITHIN country's borders in a year","+ Net Factor Income from Abroad (NFIA) = GNP (at MP)","− Depreciation = NNP (at MP) [also called Net National Product]","− Indirect Taxes + Subsidies = NNP (at FC) = National Income","− Corporate Taxes − Retained Profits + Transfer Payments = Personal Income","− Personal Taxes = Disposable Personal Income (DPI)"]},
+      {type:"key",lbl:"3 Methods of Measurement",pts:["Output/Product Method: sum of value added at each stage (avoids double counting)","Income Method: Wages + Rent + Interest + Profit + Mixed Income","Expenditure Method: C + I + G + (X−M) where C=consumption, I=investment, G=govt spending, X=exports, M=imports"]},
+      {type:"trick",lbl:"GDP vs GNP",txt:"GDP = WITHIN country's borders (includes foreigners working in India, excludes Indians working abroad). GNP = BY a country's NATIONALS (excludes foreigners, includes nationals abroad). GNP = GDP + NFIA. If NFIA > 0: GNP > GDP. If NFIA < 0: GNP < GDP."}
+    ]},
+    {t:"Money, Banking & Monetary Policy",p:"Functions of money | RBI instruments | Repo, CRR, SLR, OMO",badge:"MCQ — every attempt",notes:[
+      {type:"key",lbl:"Functions of Money",pts:["Primary: (1) Medium of exchange — eliminates barter problems, (2) Measure of value / Unit of account","Secondary: (3) Store of value, (4) Standard of deferred payment (credit)","Contingent: (5) Basis of credit, (6) Distribution of national income, (7) Transfer of value"]},
+      {type:"key",lbl:"RBI Monetary Policy Tools",pts:["Repo Rate: rate at which RBI lends to commercial banks (Repo↑ → credit costly → inflation↓)","Reverse Repo Rate: rate at which RBI borrows from banks (RRR < Repo always)","CRR (Cash Reserve Ratio): % of deposits banks must keep with RBI as cash","SLR (Statutory Liquidity Ratio): % of deposits banks must maintain in liquid assets (gold, govt securities)","OMO (Open Market Operations): RBI buys/sells govt securities to control money supply","Bank Rate: rate at which RBI discounts bills — signals long-term monetary stance"]},
+      {type:"trick",lbl:"Inflation Control",txt:"Demand-pull inflation: too much money chasing too few goods. Control: raise Repo, CRR, SLR — reduces money supply. Cost-push: rise in input costs. Control: supply-side measures, reduce taxes. Stagflation (inflation + recession) = hardest to control — standard tools create conflict."}
+    ]},
+    {t:"Business Cycles & International Trade",p:"Boom→Recession→Depression→Recovery | BOT vs BOP",badge:"Theory MCQ",notes:[
+      {type:"key",lbl:"Business Cycle Phases",pts:["1. Expansion/Boom: rising GDP, employment, investment, prices, optimism","2. Peak: maximum output, full employment, inflationary pressure","3. Contraction/Recession: falling GDP for 2+ quarters, rising unemployment, falling investment","4. Trough/Depression: minimum output, maximum unemployment, deflation","5. Recovery: gradual upturn, investment begins, employment rises"]},
+      {type:"key",lbl:"International Trade",pts:["Absolute Advantage: produce more of a good using same resources (Adam Smith)","Comparative Advantage: produce at lower opportunity cost (Ricardo) — basis for ALL trade","BOT (Balance of Trade): exports − imports of VISIBLE/merchandise goods only","BOP (Balance of Payments): ALL economic transactions with rest of world (current + capital account)","Favourable BOT: exports > imports | Unfavourable: imports > exports","Tariff: tax on imports | Non-tariff barriers: quotas, licences, standards"]}
+    ]},
+    {t:"Indian Economy — Key Features",p:"Mixed economy | Agriculture | Industrial policy | Recent reforms",badge:"Theory MCQ",notes:[
+      {type:"key",lbl:"Features of Indian Economy",pts:["Mixed Economy: both public and private sector coexist","Agriculture: ~15% of GDP but ~45% of employment (structural imbalance)","Demographic Dividend: large working-age population (benefit if skilled)","Poverty & Inequality: Lorenz curve measures inequality, Gini coefficient"]},
+      {type:"key",lbl:"Economic Sectors",pts:["Primary: agriculture, mining, forestry, fishing","Secondary: manufacturing, construction","Tertiary/Services: banking, insurance, IT, trade (largest GDP contributor ~54%)","Quaternary: knowledge-based (R&D, information technology)"]}
+    ]},
+  ]},
+  {id:"mgmt4",em:"🏢",title:"Management — Functions & Theories",color:"#FFBB44",cards:[
+    {t:"Functions of Management — POSCORD",p:"Planning | Organizing | Staffing | Coordinating | Directing | Controlling",badge:"MCQ every attempt",notes:[
+      {type:"mem",lbl:"POSCORD — Detailed",pts:["Planning: deciding WHAT to do, HOW, WHEN, by WHOM. Primary function. Forward-looking. Mental process. Goal-oriented. Bridge between present and desired future.","Organizing: grouping activities, allocating resources, establishing authority-responsibility. Result = organization structure.","Staffing: recruitment, selection, training, placement, appraisal. Ensures right person in right job.","Directing: guiding, leading, motivating employees. Includes supervision, communication, motivation, leadership.","Coordinating: synchronizing all activities, departments, people toward common goal. Ensures no duplication.","Controlling: measuring actual vs planned performance. Steps: set standards → measure performance → compare → take corrective action."]},
+      {type:"trick",lbl:"Fayol's 14 Principles",txt:"Henri Fayol's key principles: Division of work, Authority & Responsibility, Discipline, Unity of Command (one boss), Unity of Direction (one plan), Subordination of individual interest, Remuneration, Centralisation, Scalar Chain (hierarchy), Order, Equity, Stability of tenure, Initiative, Esprit de corps."}
+    ]},
+    {t:"Motivation Theories — Maslow, Herzberg, McGregor",p:"Maslow: 5 needs hierarchy | Herzberg: hygiene vs motivators | McGregor: X vs Y",badge:"MCQ Dec 2025",notes:[
+      {type:"key",lbl:"Maslow's Hierarchy of Needs (Bottom to Top)",pts:["1. Physiological: food, water, shelter, warmth (most basic)","2. Safety/Security: job security, safe environment, financial security","3. Social/Belonging: friendship, love, group membership","4. Esteem: recognition, achievement, status, self-respect","5. Self-Actualisation: realising full potential, creativity, peak experience (highest)"]},
+      {type:"key",lbl:"Herzberg's Two-Factor Theory",pts:["Hygiene Factors (Dissatisfiers): salary, job security, working conditions, supervision, company policy — their ABSENCE causes dissatisfaction but PRESENCE does NOT motivate","Motivators (Satisfiers): achievement, recognition, interesting work, responsibility, advancement — their PRESENCE motivates and creates job satisfaction"]},
+      {type:"trick",lbl:"McGregor X vs Y + Likert",txt:"Theory X: lazy workers, dislike work, need control/threats (authoritarian management). Theory Y: self-motivated, creative, seek responsibility (participative management). Likert: Exploitative Authoritative → Benevolent Authoritative → Consultative → Participative Group (System 4 = best)."}
+    ]},
+    {t:"Leadership Styles & Decision Making",p:"Autocratic | Democratic | Laissez-faire | Transformational | Transactional",badge:"Theory MCQ",notes:[
+      {type:"key",lbl:"Leadership Styles",pts:["Autocratic: leader makes all decisions alone. Fast decisions, low morale. Good for crisis/emergency.","Democratic/Participative: involves team in decisions. High morale, better acceptance, slower process.","Laissez-faire/Free Rein: full freedom to subordinates. Best for highly skilled/creative teams.","Transformational: inspires followers to transcend self-interest for organisational goals.","Transactional: based on exchange — reward for performance, punishment for non-performance."]},
+      {type:"key",lbl:"Decision Making Types",pts:["Programmed: routine, repetitive, structured (daily production schedule, reorder levels)","Non-programmed: unique, complex, unstructured (entering new market, crisis management)","Strategic: top management, long-term, high risk","Tactical: middle management, medium-term","Operational: lower management, short-term, daily"]},
+      {type:"trick",lbl:"Authority vs Responsibility vs Accountability",txt:"Authority = RIGHT to give orders. Responsibility = OBLIGATION to perform assigned task. Accountability = ANSWERABILITY for results. Authority can be DELEGATED. Responsibility CANNOT be fully delegated (you remain responsible). Accountability ALWAYS rests with original authority."}
+    ]},
+    {t:"Organisation Structure, Span & Delegation",p:"Line | Line & Staff | Functional | Centralisation vs Decentralisation",badge:"Theory MCQ",notes:[
+      {type:"key",lbl:"Organisation Structures",pts:["Line: simple, direct authority top to bottom. No specialists. Best for small firms.","Line & Staff: line authority + staff specialists (advisors). Most common in practice.","Functional (Taylor's): specialists have authority in their area. Multiple bosses. Violates unity of command.","Committee: group decisions. Slow but balanced. Used for policy matters.","Matrix: dual reporting (project + function). Best for project-based work. Most complex."]},
+      {type:"key",lbl:"Span of Control",pts:["Wide span: many subordinates per manager. Flat hierarchy. Low cost. Works when tasks are simple/routine.","Narrow span: few subordinates. Tall hierarchy. Better control. High cost.","Optimal span depends on: complexity of work, subordinate capability, manager capability, communication technology"]},
+      {type:"key",lbl:"MBO (Management by Objectives)",pts:["Concept by Peter Drucker","Process: Set objectives JOINTLY → Plan actions → Implement → Review → Appraise","Focus on RESULTS not activities","Advantages: clarity, motivation, alignment | Disadvantages: time-consuming, emphasis on short-term"]}
+    ]},
+  ]},
+]},
+};
+
+// ══════════════════════════════════
+// STATE
+// ══════════════════════════════════
+let CP=null,CS=null,EX=new Set(),READ=new Set();
+
+function goHome(){
+  CP=null;CS=null;EX.clear();
+  document.getElementById('si').value='';
+  document.getElementById('stabs-wrap').style.display='none';
+  document.getElementById('wrap').style.display='none';
+  document.getElementById('home').style.display='block';
+  act('t0','n0');updatePbar();renderHome();
+}
+
+function renderHome(){
+  const tc=Object.values(D).reduce((s,p)=>s+p.secs.reduce((ss,sec)=>ss+sec.cards.length,0),0);
+  const pc={1:'#FF6B6B',2:'#4A9EFF',3:'#2DAA6E',4:'#F5A623'};
+  const pe={1:'⚖️',2:'📒',3:'📐',4:'💹'};
+  const ps={1:'Business Laws & Communication',2:'Financial & Cost Accounting',3:'Maths & Statistics',4:'Economics & Management'};
+  const pm={1:'80% Laws + 20% Comm',2:'70% Fin Acc + 30% Cost',3:'60% Maths + 40% Stats',4:'60% Eco + 40% Mgmt'};
+  document.getElementById('home').innerHTML=`
+    <div class="hero">
+      <div style="font-size:44px;margin-bottom:10px">📖</div>
+      <h2>Last Minute Revision</h2>
+      <p>CMA Foundation — All 4 Papers compiled from ICMAI Study Material & Past Exam Questions<br/>
+      <strong style="color:#FFD700">${tc} topics</strong> • <span style="color:#FF6B6B;font-weight:700">Exam: June 14, 2026 • Pass: 40% each | 50% aggregate</span></p>
+    </div>
+    <div class="pgrid">
+      ${[1,2,3,4].map(p=>`<div class="pc" style="--c:${pc[p]}" onclick="goPaper(${p})">
+        <div class="pc-em">${pe[p]}</div>
+        <div class="pc-n">Paper ${p}</div>
+        <div style="font-size:11px;font-weight:700;color:${pc[p]};margin-bottom:3px">${ps[p]}</div>
+        <div class="pc-s">${pm[p]}</div>
+      </div>`).join('')}
+    </div>
+    <div class="tips-card">
+      <div class="tips-lbl">⚡ Last Minute Strategy — June 14</div>
+      ${[
+        {c:'#FF6B6B',t:'P1 Laws: ICA = 50%+ of paper. Focus on: essentials of contract, consideration exceptions, void vs voidable table, free consent FICUM, NI Act differences table.'},
+        {c:'#4A9EFF',t:'P2 Accounts: Adjustments (outstanding/prepaid/bad debts) + CS trap + Depreciation + BRS = guaranteed 50+ marks. Memorise double entry for each adjustment.'},
+        {c:'#2DAA6E',t:'P3 Maths: AP/GP nth term + SI/CI shortcuts + P&C tricks + SD assumed mean = fastest marks. 60% questions are direct formula application.'},
+        {c:'#F5A623',t:'P4 Eco/Mgmt: Elasticity types (PED/YED/XED) + Maslow hierarchy + National Income aggregates + Market structure table = MCQ goldmine.'},
+        {c:'#CC88FF',t:'Strategy: Don\'t skip any paper. Minimum 40 per paper needed. If weak in one, target easy MCQs there and excel in others. Attempt ALL questions — no negative marking.'}
+      ].map(x=>`<div class="tip-r"><div class="tip-dot" style="background:${x.c}"></div><div class="tip-t">${x.t}</div></div>`).join('')}
+    </div>
+    <div style="text-align:center;color:#334;font-size:11px;padding-top:6px">Tap any paper to start revision • Tap topic card to expand notes</div>
+  `;
+}
+
+function goPaper(p){
+  CP=p;CS=D[p].secs[0].id;EX.clear();
+  document.getElementById('si').value='';
+  document.getElementById('home').style.display='none';
+  document.getElementById('wrap').style.display='block';
+  document.getElementById('stabs-wrap').style.display='block';
+  act(`t${p}`,`n${p}`);
+  renderStabs();renderContent();updatePbar();
+}
+
+function renderStabs(){
+  document.getElementById('stabs').innerHTML=D[CP].secs.map(s=>
+    `<button class="stab ${s.id===CS?'on':''}" style="--c:${s.color}" onclick="pickSec('${s.id}')">${s.em} ${s.title}</button>`
+  ).join('');
+}
+
+function pickSec(id){CS=id;EX.clear();renderStabs();renderContent();window.scrollTo(0,0);}
+
+function renderContent(){
+  const sv=document.getElementById('si').value.trim().toLowerCase();
+  const el=document.getElementById('wrap');
+  if(sv){
+    const res=[];
+    Object.entries(D).forEach(([pn,paper])=>{
+      paper.secs.forEach(sec=>{
+        sec.cards.forEach((card,ci)=>{
+          const txt=(card.t+' '+card.p+' '+card.notes.map(n=>(n.pts||[]).join(' ')+(n.txt||'')+(n.tbl?JSON.stringify(n.tbl):'')).join(' ')).toLowerCase();
+          if(txt.includes(sv)) res.push({...card,pn,pc:paper.color,sn:sec.title,sc:sec.color,uid:`s_p${pn}_${sec.id}_${ci}`});
+        });
+      });
+    });
+    if(!res.length){el.innerHTML=`<div class="no-res">No results for "${sv}"<br/><span style="font-size:11px;display:block;margin-top:8px">Try: consideration, elasticity, BRS, Maslow, depreciation, GP</span></div>`;return;}
+    el.innerHTML=`<div style="font-size:12px;color:#334;margin-bottom:12px">${res.length} result${res.length>1?'s':''} for "${sv}"</div>`+res.map(r=>cHTML(r,r.sc,r.uid,`<span style="color:${r.pc}">Paper ${r.pn}</span> › ${r.sn}`)).join('');
+    return;
+  }
+  const sec=D[CP].secs.find(s=>s.id===CS);
+  if(!sec)return;
+  el.innerHTML=`<div class="sec-hdr"><span style="font-size:21px">${sec.em}</span><h2 style="color:${sec.color}">${sec.title}</h2><span class="cnt">${sec.cards.length} topics</span></div>`+
+    sec.cards.map((card,i)=>cHTML(card,sec.color,`${sec.id}_${i}`,null)).join('');
+}
+
+function cHTML(card,color,uid,lbl){
+  const open=EX.has(uid);
+  let body='';
+  if(open){
+    body=card.notes.map(n=>{
+      if(n.tbl) return `<div class="nb table-box"><span class="nl key">📊 ${n.lbl}</span><table class="dtbl"><tr>${n.tbl.cols.map(c=>`<th style="color:${color}">${c}</th>`).join('')}</tr>${n.tbl.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>`;
+      if(n.pts) return `<div class="nb ${n.type}"><span class="nl ${n.type}">${n.type==='key'?'🔑':n.type==='trick'?'⚡':n.type==='mem'?'🧠':'⚠️'} ${n.lbl}</span><ul class="pts">${n.pts.map(p=>`<li>${p}</li>`).join('')}</ul></div>`;
+      return `<div class="nb ${n.type}"><span class="nl ${n.type}">${n.type==='key'?'🔑':n.type==='trick'?'⚡':n.type==='mem'?'🧠':'⚠️'} ${n.lbl}</span><div style="color:#9AAABB">${n.txt}</div></div>`;
+    }).join('');
+  }
+  return `<div class="card" style="--c:${color}" id="c-${uid}">
+    <div class="chd" onclick="tog('${uid}')">
+      <div style="flex:1;min-width:0">
+        ${lbl?`<div class="res-lbl">${lbl}</div>`:''}
+        <div class="ctitle">${card.t}</div>
+        <div class="cprev">${card.p}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;margin-left:8px">
+        <span class="cbadge">${card.badge}</span>
+        <span class="carr">${open?'▲':'▼'}</span>
+      </div>
+    </div>
+    ${open?`<div class="cbody">${body}</div>`:''}
+  </div>`;
+}
+
+function tog(uid){
+  if(EX.has(uid)){EX.delete(uid);}else{EX.add(uid);READ.add(uid);updatePbar();}
+  renderContent();
+  setTimeout(()=>{const e=document.getElementById(`c-${uid}`);if(e)e.scrollIntoView({behavior:'smooth',block:'nearest'});},50);
+}
+
+function act(tid,nid){
+  document.querySelectorAll('.ptab').forEach(e=>e.classList.remove('on'));
+  document.querySelectorAll('.nb2').forEach(e=>e.classList.remove('on'));
+  document.getElementById(tid)?.classList.add('on');
+  document.getElementById(nid)?.classList.add('on');
+}
+
+function updatePbar(){
+  const tc=Object.values(D).reduce((s,p)=>s+p.secs.reduce((ss,sec)=>ss+sec.cards.length,0),0);
+  const pct=Math.round(READ.size/tc*100);
+  const pb=document.getElementById('pbar');
+  if(pb){pb.style.width=pct+'%';pb.style.setProperty('--pb',CP?D[CP].color:'#6C63FF');}
+}
+
+document.getElementById('si').addEventListener('input',function(){
+  if(CP===null){CP=1;document.getElementById('home').style.display='none';document.getElementById('wrap').style.display='block';document.getElementById('stabs-wrap').style.display='none';}
+  renderContent();
+});
+
+// PWA
+let dp=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;setTimeout(()=>document.getElementById('ibanner').classList.add('show'),2500);});
+document.getElementById('ib').addEventListener('click',async()=>{if(dp){dp.prompt();await dp.userChoice;dp=null;document.getElementById('ibanner').classList.remove('show');}});
+const isIOS=/iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+const isSA=window.matchMedia('(display-mode: standalone)').matches;
+if(isIOS&&!isSA){setTimeout(()=>{const b=document.getElementById('ibanner');b.querySelector('.it').innerHTML='<strong>📲 Install on iPhone</strong>Tap Share → "Add to Home Screen"';b.querySelector('#ib').style.display='none';b.classList.add('show');},2500);}
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+goHome();
+</script>
+</body>
+</html>
